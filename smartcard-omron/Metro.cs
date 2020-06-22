@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using ThaiNationalIDCard.NET.Models;  //import library smartcard
 using ThaiNationalIDCard.NET;
+
+
 using smartcard_omron.Models;
 using System.IO.Ports;
 using System.Globalization;

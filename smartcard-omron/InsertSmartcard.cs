@@ -20,11 +20,7 @@ namespace SmartcardApp
         public static ThaiNationalIDCardReader cardReader;
         public static PersonalPhoto personalPhoto;
 
-        //public static Patients patient = new Patients();
-        //static bool _continue;
-        //static SerialPort _serialport;
-
-   
+ 
         public InsertSmartcard()
         {
             InitializeComponent();
@@ -36,7 +32,6 @@ namespace SmartcardApp
         private void time_checkreadsmartcard_Tick(object sender, EventArgs e)
         {
            
-
             while (true)
             {
                 try
@@ -50,9 +45,10 @@ namespace SmartcardApp
                     if (personalPhoto.CitizenID == Patients.IDCard)
                     {
                         ReadInbody320 formreaddata_inbody320 = new ReadInbody320();
-                      
+
                         //formreaddata_inbody320.Getdata(patient);
-                        formreaddata_inbody320.Show();
+                        this.Hide();                    //hide form Insertsmartcard
+                        formreaddata_inbody320.Show();  // show form ReadInbody320
                         time_checkreadsmartcard.Stop();
 
                         return;
@@ -60,12 +56,6 @@ namespace SmartcardApp
 
                     ReadSmartcard(personalPhoto);  // read smartcard
 
-                    //t.Interval = 500;
-                    //t.Enabled = true;
-                    //timer_readdata_Tick(null, null);
-                    ////timer_readdata320.Start();
-
-                    //timer_readdata320.Start();
                 }
                 catch(Exception ex)
                 {

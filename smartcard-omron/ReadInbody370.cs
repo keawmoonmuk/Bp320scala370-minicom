@@ -31,30 +31,7 @@ namespace SmartcardApp
         {
             InitializeComponent();
 
-            //try
-            //{
-            //    cardReader = null;
-            //    personalPhoto = null;
-            //    cardReader = new ThaiNationalIDCardReader();  // new method
-            //    personalPhoto = cardReader.GetPersonalPhoto();
-
-            //    if (personalPhoto.CitizenID == patient.IDCard) return;
-
-                //ReaddataInbody320();  //read inbody 370
                 timer_readdatainbody370.Start();
-
-            //    if (data.Width != null)
-            //    {
-            //        ReadInbody370 forminbody370 = new ReadInbody370();
-            //        forminbody370.Show();
-            //    }
-            //}
-            //catch (Exception ex)
-            //{
-            //    Console.WriteLine(ex);
-            //    //Cleardata();
-
-            //}
 
         }
         //timer read data 370
@@ -73,7 +50,9 @@ namespace SmartcardApp
             else
             {
                 Metro formresult = new Metro();
-                formresult.Show();
+
+                this.Hide();       //hide form ReadInbody 370
+                formresult.Show(); // show form resulat metro
                 timer_readdatainbody370.Stop();
             }
         }

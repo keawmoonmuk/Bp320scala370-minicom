@@ -16,10 +16,7 @@ namespace SmartcardApp
 {
     public partial class ReadInbody320 : Form
     {
-        //private static ThaiNationalIDCardReader cardReader;
-        //private static PersonalPhoto personalPhoto;
-        
-      
+
        public Patients patient = new Patients();  //import patient
        static bool _continue;
        static SerialPort _serialport;
@@ -28,31 +25,9 @@ namespace SmartcardApp
         public ReadInbody320()
         {
             InitializeComponent();
-            
-            //try
-            //{
-            //    cardReader = null;
-            //    personalPhoto = null;
-            //    cardReader = new ThaiNationalIDCardReader();  // new method
-            //    personalPhoto = cardReader.GetPersonalPhoto();
-
-            //    if (personalPhoto.CitizenID == patient.IDCard) return;
-
-                //ReaddataInbody320();  //read inbody 320
+                        
                 timer_readinbody320.Start();
-
-            //    if (data.Sys != null)
-            //    {
-            //        ReadInbody370 forminbody370 = new ReadInbody370();
-            //        forminbody370.Show();
-            //    }
-            //}
-            //catch (Exception ex)
-            //{
-            //    Console.WriteLine(ex);
-            //    //Cleardata();
-
-            //}
+       
         }
 
         //user timer read inbody 320
@@ -69,7 +44,9 @@ namespace SmartcardApp
             else
             {
                 ReadInbody370 form370 = new ReadInbody370();
-                form370.Show();
+
+                this.Hide();     // hide form Readinbody 320
+                form370.Show(); // show form ReadInbody470
                 timer_readinbody320.Stop();
             }
         }
@@ -144,39 +121,7 @@ namespace SmartcardApp
                                 Console.WriteLine(Data.Pr);
                               
                             }
-                            //lenght = 64
-                            //if(bytes.Count == 64)
-                            //{
-                            //    //sys
-                            //    char sys_s = Convert.ToChar(bytes[34]);
-                            //    char sys_y = Convert.ToChar(bytes[35]);
-                            //    char sys_ss = Convert.ToChar(bytes[36]);
-
-                            //    //dia
-                            //    char dia_d = Convert.ToChar(bytes[44]);
-                            //    char dia_i = Convert.ToChar(bytes[45]);
-                            //    char dia_a = Convert.ToChar(bytes[46]);
-                            //    //pr
-                            //    char pr_p = Convert.ToChar(bytes[49]);
-                            //    char pr_r = Convert.ToChar(bytes[50]);
-                            //    char pr_pr = Convert.ToChar(bytes[51]);
-
-                            //    string datetimenow = DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss");
-                            //    string sys = sys_s.ToString() + sys_y.ToString() + sys_ss.ToString();
-                            //    string dia = dia_d.ToString() + dia_i.ToString() + dia_a.ToString();
-                            //    string pr = pr_p.ToString() + pr_r.ToString() + pr_pr.ToString();
-
-                            //    //data.Map = map;
-                            //    Data.Sys = sys;
-                            //    Data.Dia = dia;
-                            //    Data.Pr = pr;
-                            //    Data.datetime = datetimenow;
-
-                            //    Console.WriteLine(Data.Sys);
-                            //    Console.WriteLine(Data.Dia);
-                            //    Console.WriteLine(Data.Pr);
-                            //}
-                            //if (bytes.Count == 64) break;
+                      
                             if (bytes.Count == 192) break;
                         }
 

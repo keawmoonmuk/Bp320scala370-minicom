@@ -186,5 +186,6 @@
     <None Include="assets\img\bsm370.jpg" />
     <Content Include="MetroFramework.txt" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
