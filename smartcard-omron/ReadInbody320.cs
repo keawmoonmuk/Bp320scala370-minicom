@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.IO.Ports;
 using System.Linq;
 using System.Text;
@@ -22,6 +23,11 @@ namespace SmartcardApp
        static SerialPort _serialport;
        public Data data = new Data();
 
+
+        //=================log==============  
+        private string msg = "";
+        private string error = "";
+        string directory_root = @"C:\LOG";
         public ReadInbody320()
         {
             InitializeComponent();
@@ -116,6 +122,9 @@ namespace SmartcardApp
                                 Data.Pr = pr;
                                 Data.datetime = datetimenow;
 
+                                msg = "Read data Device 320 form serialport suecess...";
+                                LogMessage();
+
                                 Console.WriteLine(Data.Sys);
                                 Console.WriteLine(Data.Dia);
                                 Console.WriteLine(Data.Pr);
@@ -133,9 +142,42 @@ namespace SmartcardApp
             }
             catch (Exception ex)
             {
+                error = "Not connect Serialport.... ";
+                LogMessageError();
+                Console.WriteLine("Not connection serial port", ex);
+
                 Console.WriteLine("Not connection serial port", ex);
 
             }
+        }
+
+
+        //==============log complete===================
+        public void LogMessage()
+        {
+
+            if (!Directory.Exists(directory_root))
+            {
+                Directory.CreateDirectory(directory_root);
+
+            }
+
+            StreamWriter stw = new StreamWriter(@"C:\Log\log.txt", true);
+            stw.WriteLine($"TIME COMPLETE : {DateTime.Now} MESSAGE : {msg} -- Data Patient : {Patients.Th_firstname} - {Patients.Th_lastname}, {Patients.IDCard} {Patients.Gender} {Patients.DateOfbrith} DATA BP-9020 {Data.Sys}-{Data.Dia}- {Data.Map}- {Data.Pr} ");
+            stw.Close();
+
+        }
+
+        //===================log error====================
+        public void LogMessageError()
+        {
+            if (!Directory.Exists(directory_root))
+            {
+                Directory.CreateDirectory(directory_root);
+            }
+            StreamWriter stw = new StreamWriter(@"C:\Log\log.txt", true);
+            stw.WriteLine($"TIME ERROR : {DateTime.Now}  Error Message : {error} ");
+            stw.Close();
         }
 
     }

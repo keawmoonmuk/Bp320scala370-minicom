@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Globalization;
+using System.IO;
 using System.IO.Ports;
 using System.Linq;
 using System.Text;
@@ -17,10 +18,15 @@ namespace SmartcardApp
 {
     public partial class InsertSmartcard : Form
     {
+        //=========Card reader============
         public static ThaiNationalIDCardReader cardReader;
         public static PersonalPhoto personalPhoto;
 
- 
+        //========logfile=============
+        private string msg = "";
+        private string error = "";
+        string directory_root = @"C:\LOG";
+
         public InsertSmartcard()
         {
             InitializeComponent();
@@ -49,17 +55,24 @@ namespace SmartcardApp
                         //formreaddata_inbody320.Getdata(patient);
                         this.Hide();                    //hide form Insertsmartcard
                         formreaddata_inbody320.Show();  // show form ReadInbody320
+
                         time_checkreadsmartcard.Stop();
 
                         return;
                     }
 
                     ReadSmartcard(personalPhoto);  // read smartcard
+                    msg = " Read smartcard suecess ....";
+                    LogMessage();  //log file
 
                 }
                 catch(Exception ex)
                 {
-                    Console.WriteLine("error read smartcard  =", ex);
+                    error = "Not insert smartcard reader ";
+
+                    LogMessageError();
+
+                    Console.WriteLine("Not insert smartcard reader...", ex);
 
                 }
                
@@ -151,6 +164,34 @@ namespace SmartcardApp
         {
             string date_format = date.ToString("dd/MM/yyyy", new CultureInfo("th-TH"));
             return date_format;
+        }
+
+        //=============log complete===================
+        public void LogMessage()
+        {
+
+            if (!Directory.Exists(directory_root))
+            {
+                Directory.CreateDirectory(directory_root);
+
+            }
+
+            StreamWriter stw = new StreamWriter(@"C:\Log\log.txt", true);
+            stw.WriteLine($"TIME COMPLETE : {DateTime.Now}-- MESSAGE : {msg} -- Data Patient : {Patients.Th_firstname} - {Patients.Th_lastname}, {Patients.IDCard} {Patients.Gender} {Patients.DateOfbrith} ");
+            stw.Close();
+
+        }
+
+        //==================log error=========================
+        public void LogMessageError()
+        {
+            if (!Directory.Exists(directory_root))
+            {
+                Directory.CreateDirectory(directory_root);
+            }
+            StreamWriter stw = new StreamWriter(@"C:\Log\log.txt", true);
+            stw.WriteLine($"TIME ERROR : {DateTime.Now}  Error Message : {error} ");
+            stw.Close();
         }
 
 

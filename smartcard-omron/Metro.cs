@@ -32,6 +32,11 @@ namespace smartcard_omron
         Data data = new Data();
     
         Timer t = new Timer();
+        //===================log==================
+        private string msg = "";
+        private string error = "";
+        string directory_root = @"C:\LOG";
+
 
         public Metro()
         {
@@ -90,7 +95,7 @@ namespace smartcard_omron
                 break;
             }
         }
-        //--------------cal api-----------------
+        //=====================cal api========================
         public void Callwebservice()
         {
             string urlapi = "https://localhost:44398/api/DataPatient";                        //url
@@ -183,6 +188,9 @@ namespace smartcard_omron
             metroTxt_status.ForeColor = Color.Black;
             metroTxt_status.Font = new Font("Arial", 40, FontStyle.Bold);
 
+
+            msg = "Read data to form result suecess ...";
+            LogMessage();
         }
 
 
@@ -616,6 +624,35 @@ namespace smartcard_omron
             metroTxt_sys.Text = "";
             metroTxt_dia.Text = "";
        
+        }
+
+
+        //log complete
+        public void LogMessage()
+        {
+
+            if (!Directory.Exists(directory_root))
+            {
+                Directory.CreateDirectory(directory_root);
+
+            }
+
+            StreamWriter stw = new StreamWriter(@"C:\Log\log.txt", true);
+            stw.WriteLine($"TIME COMPLETE : {DateTime.Now}  MESSAGE : {msg} -- Data Patient : {Patients.Th_firstname} - {Patients.Th_lastname}, {Patients.IDCard} {Patients.Gender} {Patients.DateOfbrith} DATA BP-9020 {Data.Sys}-{Data.Dia}- {Data.Map}- {Data.Pr} ");
+            stw.Close();
+
+        }
+
+        //log error
+        public void LogMessageError()
+        {
+            if (!Directory.Exists(directory_root))
+            {
+                Directory.CreateDirectory(directory_root);
+            }
+            StreamWriter stw = new StreamWriter(@"C:\Log\log.txt", true);
+            stw.WriteLine($"TIME ERROR : {DateTime.Now}  Error Message : {error} ");
+            stw.Close();
         }
     }
 }
